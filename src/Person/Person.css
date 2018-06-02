@@ -1,0 +1,16 @@
+.Person{
+    width: 60%;
+    margin: auto;
+    padding: 16px;
+    box-shadow: 0 2px 3px #eee;
+    text-align: center;
+    border : 1px solid #eee
+}
+
+.red {
+    color: red
+}
+
+.bold{
+    font-weight: bold
+}
