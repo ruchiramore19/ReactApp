@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Person from './Person/Person';
+import logo from 'C:/Users/DELL/ReactProjects/reactapp/src/logo.svg';
+//below concept of css modules
+import classes from 'C:/Users/DELL/ReactProjects/reactapp/src/containers/App.css';  //created local identity name by ejecting in webpack css loader so that all the css classes can be accessed as properties of this local object 'classes'
+import Person from '../components/Persons/Person/Person';
 //import Radium, {StyleRoot} from 'radium';  //properties like hover are not available for js inline styling,radium has some extended properties like it
+import Persons from '../components/Persons/Persons';
 
 class App extends Component {
  //state is reserved object and can contain attributes like person array of objects
@@ -72,56 +74,41 @@ class App extends Component {
 
   render() {
 
-    const style = {
-      backgroundColor : 'green',
-      color : 'White',
-      font : 'inherit',
-      border : '1px solid blue',
-      padding : '8px',
-      
-    };
-
+    
     let persons = null;
+    let btnClass = ''
+
     if(this.state.showPersons){
         persons = (
           <div>
-          {
-            this.state.person.map((person, index) => {
-              return (
-              <Person 
-                name={person.name}
-                age= {person.age}
-                key = {person.id}
-                click = {() => this.deletePersons(index)}
-                changed = {(event) => this.nameChangeHandler(event,person.id)}
-              />
-              )
-            })
-          }
-        </div>
+            <Persons person={this.state.person}
+              clickedDel={this.deletePersons}
+              nameChange={this.nameChangeHandler} />
+          </div>
       );
-      style.backgroundColor = 'Red';
+      
+      btnClass = classes.Red;
       
     }
 
     //dynamically change styling of elements
-    const classes = []
+    const CSSclasses = []
     if(this.state.person.length<=2){
-      classes.push('red');               //['red']
+      CSSclasses.push(classes.Red);               //['red']
     }
     if(this.state.person.length<=1){
-      classes.push('bold');              //['red','bold']
+      CSSclasses.push(classes.bold);              //['red','bold']
     }
-    const multiStyleClasses = classes.join(' ') //'red bold' this kind of string is accepted for using multiple css classes
+    const multiStyleClasses = CSSclasses.join(' ') //'red bold' this kind of string is accepted for using multiple css classes
     
     return (
-      <StyleRoot>
-      <div className="App">
+      
+      <div className={classes.App}>
        <p className={multiStyleClasses}>I am React App</p>
-       <button style={style} onClick={this.togglePersonHandler}>Switch Names</button> 
+       <button className={btnClass} onClick={this.togglePersonHandler}>Switch Names</button> 
         {persons}
       </div>
-      </StyleRoot>
+      
     );
   }
 }
